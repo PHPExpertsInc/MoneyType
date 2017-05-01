@@ -21,6 +21,14 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->leftOperand;
+    }
+
+    /**
      * @param string $rightOperand
      * @return string
      */

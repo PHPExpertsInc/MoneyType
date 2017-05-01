@@ -32,6 +32,15 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->leftOperand / 100;
+    }
+
+
+    /**
      * @param $rightOperand
      * @return float
      */
