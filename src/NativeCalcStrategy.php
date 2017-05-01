@@ -42,46 +42,50 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
 
     /**
      * @param $rightOperand
-     * @return float
+     * @return string
      */
     public function add($rightOperand)
     {
         $rightOperand = $this->convertToCents($rightOperand);
         $this->leftOperand += $rightOperand;
 
-        return (double)($this->leftOperand / 100);
+        return (string)($this->leftOperand / 100);
     }
 
     /**
      * @param $rightOperand
-     * @return float
+     * @return string
      */
     public function subtract($rightOperand)
     {
         $rightOperand = $this->convertToCents($rightOperand);
         $this->leftOperand -= $rightOperand;
 
-        return (double)($this->leftOperand / 100);
+        return (string)($this->leftOperand / 100);
     }
 
     /**
      * @param $rightOperand
-     * @return float
+     * @return string
      */
     public function multiply($rightOperand)
     {
         $rightOperand = $this->convertToCents($rightOperand);
         $this->leftOperand *= $rightOperand;
 
-        return (double)($this->leftOperand / 100);
+        return (string)($this->leftOperand / 100);
     }
 
+    /**
+     * @param $rightOperand
+     * @return string
+     */
     public function divide($rightOperand)
     {
         $rightOperand = $this->convertToCents($rightOperand);
         $this->leftOperand /= $rightOperand;
 
-        return (double)($this->leftOperand / 100);
+        return (string)($this->leftOperand / 100);
     }
 
     /**
