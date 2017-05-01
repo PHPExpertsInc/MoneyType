@@ -23,7 +23,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function __toString()
     {
-        return (string)$this->leftOperand;
+        return bcround($this->leftOperand, 2);
     }
 
     /**
@@ -32,7 +32,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function add($rightOperand)
     {
-        $this->leftOperand = bcadd($this->leftOperand, $rightOperand);
+        $this->leftOperand = bcadd($this->leftOperand, $rightOperand, 10);
 
         return $this->leftOperand;
     }
@@ -43,15 +43,18 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function subtract($rightOperand)
     {
-        $this->leftOperand = bcsub($this->leftOperand, $rightOperand);
+        $this->leftOperand = bcsub($this->leftOperand, $rightOperand, 10);
 
         return $this->leftOperand;
     }
 
-    /** string */
+    /**
+     * @param $rightOperand
+     * @return string
+     */
     public function multiply($rightOperand)
     {
-        $this->leftOperand = bcmul($this->leftOperand, $rightOperand);
+        $this->leftOperand = bcmul($this->leftOperand, $rightOperand, 10);
 
         return $this->leftOperand;
     }
@@ -62,13 +65,13 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function divide($rightOperand)
     {
-        $this->leftOperand = bcdiv($this->leftOperand, $rightOperand);
+        $this->leftOperand = bcdiv($this->leftOperand, $rightOperand, 10);
 
         return $this->leftOperand;
     }
 
     /**
-     * @param string $modulus
+     * @param $modulus
      * @return string
      */
     public function modulus($modulus)

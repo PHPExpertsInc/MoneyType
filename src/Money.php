@@ -35,7 +35,7 @@ class Money implements MoneyCalculationStrategy
      */
     public function __toString()
     {
-        return (string)$this->strategy;
+        return $this->strategy->__toString();
     }
 
     /**
@@ -91,4 +91,18 @@ class Money implements MoneyCalculationStrategy
     {
         return $this->strategy->compare($rightOperand);
     }
+}
+
+/**
+ * @param $number
+ * @param int $precision
+ * @return string
+ */
+function bcround($number, $precision = 0)
+{
+    if (strpos($number, '.') !== false) {
+        if ($number[0] != '-') return bcadd($number, '0.' . str_repeat('0', $precision) . '5', $precision);
+        return bcsub($number, '0.' . str_repeat('0', $precision) . '5', $precision);
+    }
+    return $number;
 }
