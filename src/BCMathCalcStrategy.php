@@ -32,7 +32,9 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function add($rightOperand)
     {
-        return bcadd($this->leftOperand, $rightOperand);
+        $this->leftOperand = bcadd($this->leftOperand, $rightOperand);
+
+        return $this->leftOperand;
     }
 
     /**
@@ -41,13 +43,17 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function subtract($rightOperand)
     {
-        return bcsub($this->leftOperand, $rightOperand);
+        $this->leftOperand = bcsub($this->leftOperand, $rightOperand);
+
+        return $this->leftOperand;
     }
 
     /** string */
     public function multiply($rightOperand)
     {
-        return bcmul($this->leftOperand, $rightOperand);
+        $this->leftOperand = bcmul($this->leftOperand, $rightOperand);
+
+        return $this->leftOperand;
     }
 
     /**
@@ -56,7 +62,9 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function divide($rightOperand)
     {
-        return bcdiv($this->leftOperand, $rightOperand);
+        $this->leftOperand = bcdiv($this->leftOperand, $rightOperand);
+
+        return $this->leftOperand;
     }
 
     /**
