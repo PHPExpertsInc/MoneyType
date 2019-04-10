@@ -27,12 +27,12 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     /**
      * Converts a float/double to an int with no precision loss.
      *
-     * @param float $float
+     * @param string $float
      * @return int
      */
     private function convertToCents($float)
     {
-        return (int)round($float * 100);
+        return (int)round((double) $float * 100);
     }
 
     public function __construct($leftOperand)
@@ -50,7 +50,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
 
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function add($rightOperand)
@@ -62,7 +62,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function subtract($rightOperand)
@@ -73,7 +73,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function multiply($rightOperand)
@@ -85,7 +85,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function divide($rightOperand)
@@ -138,7 +138,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
-     * @param float $rightOperand
+     * @param string $rightOperand
      * @return int 0 if equal, -1 if $rightOperand is less, 1 if it is greater.
      */
     public function compare($rightOperand)

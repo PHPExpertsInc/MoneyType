@@ -28,7 +28,7 @@ class Money implements MoneyCalculationStrategy
      */
     /**
      * Money constructor.
-     * @param $amount
+     * @param string $amount
      * @param MoneyCalculationStrategy|null $calcStrategy
      * @param callable|null $hasBCMath
      */
@@ -64,7 +64,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function add($rightOperand)
@@ -73,7 +73,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function subtract($rightOperand)
@@ -82,7 +82,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function multiply($rightOperand)
@@ -91,7 +91,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function divide($rightOperand)
@@ -100,7 +100,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $modulus
+     * @param string $modulus
      * @return int
      */
     public function modulus($modulus)
@@ -109,7 +109,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param float $rightOperand
+     * @param string $rightOperand
      * @return int
      */
     public function compare($rightOperand)

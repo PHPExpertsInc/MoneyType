@@ -14,7 +14,8 @@
   },
   "require-dev": {
     "ext-bcmath": "*",
-    "phpunit/phpunit": "7.*"
+    "phpunit/phpunit": "7.*",
+    "phpstan/phpstan-shim": "^0.11.5"
   },
   "autoload": {
     "psr-4": {

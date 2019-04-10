@@ -57,7 +57,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function multiply($rightOperand)
@@ -79,7 +79,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $modulus
+     * @param string $modulus
      * @return string
      */
     public function modulus($modulus)
@@ -101,7 +101,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
  * Based off of https://stackoverflow.com/a/1653826/430062
  * Thanks, [Alix Axel](https://stackoverflow.com/users/89771/alix-axel)!
  *
- * @param $number
+ * @param string $number
  * @param int $precision
  * @return string
  */
@@ -113,5 +113,5 @@ function bcround($number, $precision = BCMathCalcStrategy::PRECISION)
     }
 
     // Pad it out to the desired precision.
-    return number_format($number, $precision);
+    return number_format((double) $number, $precision);
 }
