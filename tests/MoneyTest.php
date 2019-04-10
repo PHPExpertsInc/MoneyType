@@ -31,39 +31,44 @@ class MoneyTest extends TestCase
     {
         return new class implements MoneyCalculationStrategy
         {
-            public function __toString()
+            public function getWithFullPrecision(): string
             {
                 return '0';
             }
 
-            public function add($rightOperand)
+            public function __toString()
             {
                 return '1';
             }
 
-            public function subtract($rightOperand)
+            public function add($rightOperand)
             {
                 return '2';
             }
 
-            public function multiply($rightOperand)
+            public function subtract($rightOperand)
             {
                 return '3';
             }
 
-            public function divide($rightOperand)
+            public function multiply($rightOperand)
             {
                 return '4';
             }
 
-            public function modulus($modulus)
+            public function divide($rightOperand)
             {
                 return '5';
             }
 
-            public function compare($rightOperand)
+            public function modulus($modulus)
             {
                 return '6';
+            }
+
+            public function compare($rightOperand)
+            {
+                return '7';
             }
         };
     }
@@ -103,6 +108,36 @@ class MoneyTest extends TestCase
         foreach ($calcStratOps as $index => $op) {
             self::assertSame((string) $index, $moneyType->$op(0));
         }
+    }
+
+    public function testConfirmThatTheReadMeDemoWorks()
+    {
+        $money = new Money(5.22);
+
+        $money->add(0.55);
+        self::assertSame('5.77', $money.'');
+
+        # It keeps precision much much better than mere cents.
+        $money->subtract(0.0001);
+        self::assertSame('5.77', $money.'');
+
+        $money->subtract(0.004);
+        self::assertSame('5.77', $money.'');
+
+        $money->subtract(0.001);
+        self::assertSame('5.76', $money.'');
+
+        $money->multiply(55.777355);
+        self::assertSame('321.55', $money.'');
+        self::assertSame('321.5508738395', $money->getWithFullPrecision());
+
+        $money->divide('1.000005');
+        self::assertSame('321.55', $money.'');
+        self::assertSame('321.5492660931', $money->getWithFullPrecision());
+
+        self::assertSame(0, $money->compare('321.5492660931'));  //  0 = equal
+        self::assertSame(-1, $money->compare('321.5492660930')); // -1 = less
+        self::assertSame(1, $money->compare('321.5492660932'));  //  1 = more
     }
 }
 

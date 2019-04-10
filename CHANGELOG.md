@@ -1,4 +1,9 @@
+# Released v1.6.0: 2019-04-10
+
+* [Major] Added ::getWithFullPrecision() for seeing the whole number. 
+
 ## Released v1.5: A whole lot of goodness.  2019-04-10 
+
 * [Major] Definitely require PHP 7.2, and BCMath for dev.
 * [Major] (#1) Completely reimplemented bcround() and fixed serious bugs.
 * [Major] Fixed the precision problems in BCMathCalcStrategy.
