@@ -1,13 +1,21 @@
 <?php
-// This file is a part of the MoneyType library, a PHPExperts.pro Project.
-//
-// Copyright (c) 2017 PHP Experts, Inc. <www.phpexperts.pro>
-// Authored by Theodore R. Smith <theodore@phpexperts.pro>
-//  * 2017-05-01 14:17 IST
-//
-// This file is licensed under the terms of the MIT license:
+
+/**
+ * This file is part of MoneyType, a PHP Experts, Inc., Project.
+ *
+ * Copyright © 2017-2019 PHP Experts, Inc.
+ * Author: Theodore R. Smith <theodore@phpexperts.pro>
+ *  GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *  @ 2017-05-01 14:17 IST
+ *  https://www.phpexperts.pro/
+ *  https://github.com/phpexpertsinc/MoneyType
+ *
+ * This file is licensed under the MIT License.
+ */
 
 namespace PHPExperts\MoneyType;
+
+use ReflectionClass;
 
 class Money implements MoneyCalculationStrategy
 {
@@ -18,10 +26,22 @@ class Money implements MoneyCalculationStrategy
      * @param string $amount
      * @param MoneyCalculationStrategy|null $calcStrategy
      */
-    public function __construct($amount, MoneyCalculationStrategy $calcStrategy = null)
+    /**
+     * Money constructor.
+     * @param string $amount
+     * @param MoneyCalculationStrategy|null $calcStrategy
+     * @param callable|null $hasBCMath
+     */
+    public function __construct($amount, MoneyCalculationStrategy $calcStrategy = null, callable $hasBCMath = null)
     {
+        if (!$hasBCMath) {
+            $hasBCMath = function(): bool {
+                return extension_loaded('bcmath');
+            };
+        }
+
         if (!$calcStrategy) {
-            if (extension_loaded('bcmath')) {
+            if ($hasBCMath()) {
                 $calcStrategy = new BCMathCalcStrategy($amount);
             } else {
                 $calcStrategy = new NativeCalcStrategy($amount);
@@ -38,8 +58,13 @@ class Money implements MoneyCalculationStrategy
         return $this->strategy->__toString();
     }
 
+    public function getStrategy(): string
+    {
+        return (new ReflectionClass($this->strategy))->getShortName();
+    }
+
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function add($rightOperand)
@@ -48,7 +73,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function subtract($rightOperand)
@@ -57,7 +82,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function multiply($rightOperand)
@@ -66,7 +91,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $rightOperand
+     * @param string $rightOperand
      * @return string
      */
     public function divide($rightOperand)
@@ -75,7 +100,7 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $modulus
+     * @param string $modulus
      * @return int
      */
     public function modulus($modulus)
@@ -84,25 +109,11 @@ class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param float $rightOperand
+     * @param string $rightOperand
      * @return int
      */
     public function compare($rightOperand)
     {
         return $this->strategy->compare($rightOperand);
     }
-}
-
-/**
- * @param $number
- * @param int $precision
- * @return string
- */
-function bcround($number, $precision = 0)
-{
-    if (strpos($number, '.') !== false) {
-        if ($number[0] != '-') return bcadd($number, '0.' . str_repeat('0', $precision) . '5', $precision);
-        return bcsub($number, '0.' . str_repeat('0', $precision) . '5', $precision);
-    }
-    return $number;
 }

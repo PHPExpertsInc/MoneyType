@@ -2,21 +2,25 @@
   "name": "phpexpertsinc/money-type",
   "description": "A PHP library for a precise money handling data type. Avoids floating point rounding errors.",
   "license": "MIT",
-  "keywords": ["php", "money", "currency"],
+  "keywords": ["php", "money", "currency", "precise", "precision"],
   "authors": [
     {
       "name": "Theodore R. Smith",
       "email": "theodore@phpexperts.pro"
     }
   ],
-  "require": {},
+  "require": {
+    "php": "^7.2"
+  },
   "require-dev": {
-    "phpunit/phpunit": "^5.7"
+    "ext-bcmath": "*",
+    "phpunit/phpunit": "7.*",
+    "phpstan/phpstan-shim": "^0.11.5"
   },
   "autoload": {
     "psr-4": {
       "PHPExperts\\MoneyType\\": "src",
-      "tests\\PHPExperts\\MoneyType\\": "tests"
+      "PHPExperts\\MoneyType\\Tests\\": "tests"
     }
   }
 }

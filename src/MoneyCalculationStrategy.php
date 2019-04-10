@@ -1,11 +1,17 @@
 <?php
-// This file is a part of the MoneyType library, a PHPExperts.pro Project.
-//
-// Copyright (c) 2017 PHP Experts, Inc. <www.phpexperts.pro>
-// Authored by Theodore R. Smith <theodore@phpexperts.pro>
-// * 2017-05-01 14:31 IST
-//
-// This file is licensed under the terms of the MIT license:
+
+/**
+ * This file is part of MoneyType, a PHP Experts, Inc., Project.
+ *
+ * Copyright © 2017-2019 PHP Experts, Inc.
+ * Author: Theodore R. Smith <theodore@phpexperts.pro>
+ *  GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
+ *  @ 2017-05-01 14:31 IST
+ *  https://www.phpexperts.pro/
+ *  https://github.com/phpexpertsinc/MoneyType
+ *
+ * This file is licensed under the MIT License.
+ */
 
 namespace PHPExperts\MoneyType;
 
