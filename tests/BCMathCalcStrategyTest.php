@@ -71,4 +71,17 @@ class BCMathCalcStrategyTest extends TestCase
     {
         self::assertSame('0.0699993000', $this->calcStrat->modulus('0.1500001'));
     }
+
+    public function testCanRoundWithHighPrecision()
+    {
+        // Test high precision.
+        $expected = '-54.03';
+        $actual = bcround('-54.0300000000', 2);
+        self::assertSame($expected, $actual);
+
+        // Test no precision.
+        $expected = '-54.00';
+        $actual = bcround('-54', 2);
+        self::assertSame($expected, $actual);
+    }
 }

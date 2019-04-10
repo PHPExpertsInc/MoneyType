@@ -96,3 +96,22 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
         return bccomp($rightOperand, $this->leftOperand, self::PRECISION);
     }
 }
+
+/**
+ * Based off of https://stackoverflow.com/a/1653826/430062
+ * Thanks, [Alix Axel](https://stackoverflow.com/users/89771/alix-axel)!
+ *
+ * @param $number
+ * @param int $precision
+ * @return string
+ */
+function bcround($number, $precision = BCMathCalcStrategy::PRECISION)
+{
+    if (strpos($number, '.') !== false) {
+        if ($number[0] != '-') return bcadd($number, '0.' . str_repeat('0', $precision) . '5', $precision);
+        return bcsub($number, '0.' . str_repeat('0', $precision) . '5', $precision);
+    }
+
+    // Pad it out to the desired precision.
+    return number_format($number, $precision);
+}
