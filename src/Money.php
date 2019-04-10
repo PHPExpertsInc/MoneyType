@@ -24,10 +24,22 @@ class Money implements MoneyCalculationStrategy
      * @param string $amount
      * @param MoneyCalculationStrategy|null $calcStrategy
      */
-    public function __construct($amount, MoneyCalculationStrategy $calcStrategy = null)
+    /**
+     * Money constructor.
+     * @param $amount
+     * @param MoneyCalculationStrategy|null $calcStrategy
+     * @param callable|null $hasBCMath
+     */
+    public function __construct($amount, MoneyCalculationStrategy $calcStrategy = null, callable $hasBCMath = null)
     {
+        if (!$hasBCMath) {
+            $hasBCMath = function(): bool {
+                return extension_loaded('bcmath');
+            };
+        }
+
         if (!$calcStrategy) {
-            if (extension_loaded('bcmath')) {
+            if ($hasBCMath()) {
                 $calcStrategy = new BCMathCalcStrategy($amount);
             } else {
                 $calcStrategy = new NativeCalcStrategy($amount);
