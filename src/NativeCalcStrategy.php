@@ -139,18 +139,12 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
 
     /**
      * @param float $rightOperand
-     * @return int
+     * @return int 0 if equal, -1 if $rightOperand is less, 1 if it is greater.
      */
     public function compare($rightOperand)
     {
         $rightOperand = $this->convertToCents($rightOperand);
 
-        if ($this->leftOperand > $rightOperand) {
-            return 1;
-        } elseif ($this->leftOperand < $rightOperand) {
-            return -1;
-        } else {
-            return 0;
-        }
+        return $rightOperand <=> $this->leftOperand;
     }
 }
