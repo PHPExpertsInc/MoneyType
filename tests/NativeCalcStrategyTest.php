@@ -32,4 +32,38 @@ class NativeCalcStrategyTest extends TestCase
         $this->calcStratName = NativeCalcStrategy::class;
         $this->calcStrat = new NativeCalcStrategy('1.12');
     }
+
+    public function testWontAttemptOperationsWithNonNumbers()
+    {
+        // @FIXME: This functionality needs to be expanded to EVERY operation -and- strategy.
+        try {
+            $this->calcStrat->modulus('Not A Number');
+            $this->fail('It somehow tried to compute a non-number modulus.');
+        }
+        catch (InvalidArgumentException $e) {
+            $this->assertEquals("'Not A Number' is not a valid number.", $e->getMessage());
+        }
+    }
+
+    public function testCannotComputeTheModulusOfDecimals()
+    {
+        try {
+            $this->calcStrat->modulus('0.1500001');
+            $this->fail('It somehow tried to compute a decimal modulus.');
+        }
+        catch (InvalidArgumentException $e) {
+            self::assertEquals('Cannot compute non-integer moduli: Install ext-bcmath.', $e->getMessage());
+        }
+    }
+
+    public function testWillThrowAnExceptionIfAskedToComputeAnIntegerModulus()
+    {
+        $this->expectException('BadMethodCallException');
+        $this->calcStrat->modulus('2');
+    }
+
+    public function testCanComputeTheModulusOfIntegersIfDevPassesIAmADummyParameter()
+    {
+        self::assertSame('1', $this->calcStrat->modulus('2', NativeCalcStrategy::I_AM_A_DUMMY));
+    }
 }

@@ -15,10 +15,13 @@
 
 namespace PHPExperts\MoneyType;
 
+use BadMethodCallException;
 use InvalidArgumentException;
 
 final class NativeCalcStrategy implements MoneyCalculationStrategy
 {
+    public const I_AM_A_DUMMY = 'But I really need this';
+
     private $leftOperand;
 
     /**
@@ -66,7 +69,6 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     {
         $rightOperand = $this->convertToCents($rightOperand);
         $this->leftOperand -= $rightOperand;
-
         return (string)round($this->leftOperand / 100, 2);
     }
 
@@ -95,10 +97,11 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
-     * @param $modulus
-     * @return int
+     * @param string|int|float $modulus It must be a float-like
+     * @param string $iAmStupid Do you really want an imprecise modulus with a precision package??
+     * @return string
      */
-    public function modulus($modulus)
+    public function modulus($modulus, string $iAmStupid = '')
     {
         /**
          * Determines if a variable appears to be a float or not.
@@ -121,7 +124,14 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
         };
 
         if ($isFloatLike($modulus)) {
-            throw new InvalidArgumentException('Cannot compute non-integer moduli.');
+            throw new InvalidArgumentException('Cannot compute non-integer moduli: Install ext-bcmath.');
+        }
+
+        if ($iAmStupid !== self::I_AM_A_DUMMY) {
+            throw new BadMethodCallException(
+                'You CANNOT get precise a modulus answer via Native PHP. ' . "\n" .
+                'Install ext-bcmath (preferred) or set $iAmStupid to true.'
+            );
         }
 
         return (string) (($this->leftOperand / 100) % $modulus);
