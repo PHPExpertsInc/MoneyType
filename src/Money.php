@@ -15,6 +15,8 @@
 
 namespace PHPExperts\MoneyType;
 
+use ReflectionClass;
+
 class Money implements MoneyCalculationStrategy
 {
     protected $strategy;
@@ -54,6 +56,11 @@ class Money implements MoneyCalculationStrategy
     public function __toString()
     {
         return $this->strategy->__toString();
+    }
+
+    public function getStrategy(): string
+    {
+        return (new ReflectionClass($this->strategy))->getShortName();
     }
 
     /**
