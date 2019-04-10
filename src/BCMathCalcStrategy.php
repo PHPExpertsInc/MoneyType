@@ -17,6 +17,8 @@ namespace PHPExperts\MoneyType;
 
 final class BCMathCalcStrategy implements MoneyCalculationStrategy
 {
+    public const PRECISION = 10;
+
     private $leftOperand;
 
     public function __construct($leftOperand)
@@ -38,7 +40,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function add($rightOperand)
     {
-        $this->leftOperand = bcadd($this->leftOperand, $rightOperand, 10);
+        $this->leftOperand = bcadd($this->leftOperand, $rightOperand, self::PRECISION);
 
         return $this->leftOperand;
     }
@@ -49,7 +51,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function subtract($rightOperand)
     {
-        $this->leftOperand = bcsub($this->leftOperand, $rightOperand, 10);
+        $this->leftOperand = bcsub($this->leftOperand, $rightOperand, self::PRECISION);
 
         return $this->leftOperand;
     }
@@ -60,7 +62,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function multiply($rightOperand)
     {
-        $this->leftOperand = bcmul($this->leftOperand, $rightOperand, 10);
+        $this->leftOperand = bcmul($this->leftOperand, $rightOperand, self::PRECISION);
 
         return $this->leftOperand;
     }
@@ -71,7 +73,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function divide($rightOperand)
     {
-        $this->leftOperand = bcdiv($this->leftOperand, $rightOperand, 10);
+        $this->leftOperand = bcdiv($this->leftOperand, $rightOperand, self::PRECISION);
 
         return $this->leftOperand;
     }
@@ -82,15 +84,15 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      */
     public function modulus($modulus)
     {
-        return bcmod($this->leftOperand, $modulus);
+        return bcmod($this->leftOperand, $modulus, self::PRECISION);
     }
 
     /**
      * @param string $rightOperand
-     * @return int
+     * @return int 0 if equal, -1 if $rightOperand is less, 1 if it is greater.
      */
     public function compare($rightOperand)
     {
-        return bccomp($this->leftOperand, $rightOperand);
+        return bccomp($rightOperand, $this->leftOperand, self::PRECISION);
     }
 }
