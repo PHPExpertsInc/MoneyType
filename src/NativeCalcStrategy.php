@@ -40,7 +40,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function __toString()
     {
-        return (string)($this->leftOperand / 100);
+        return (string)round($this->leftOperand / 100, 2);
     }
 
 
@@ -53,7 +53,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
         $rightOperand = $this->convertToCents($rightOperand);
         $this->leftOperand += $rightOperand;
 
-        return (string)($this->leftOperand / 100);
+        return (string)round($this->leftOperand / 100, 2);
     }
 
     /**
@@ -65,7 +65,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
         $rightOperand = $this->convertToCents($rightOperand);
         $this->leftOperand -= $rightOperand;
 
-        return (string)($this->leftOperand / 100);
+        return (string)round($this->leftOperand / 100, 2);
     }
 
     /**
@@ -75,9 +75,9 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     public function multiply($rightOperand)
     {
         $rightOperand = $this->convertToCents($rightOperand);
-        $this->leftOperand *= $rightOperand;
+        $this->leftOperand *= $rightOperand / 100;
 
-        return (string)($this->leftOperand / 100);
+        return (string)round($this->leftOperand / 100, 2);
     }
 
     /**
@@ -87,9 +87,9 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     public function divide($rightOperand)
     {
         $rightOperand = $this->convertToCents($rightOperand);
-        $this->leftOperand /= $rightOperand;
+        $this->leftOperand /= $rightOperand / 100;
 
-        return (string)($this->leftOperand / 100);
+        return (string)round($this->leftOperand / 100, 2);
     }
 
     /**
