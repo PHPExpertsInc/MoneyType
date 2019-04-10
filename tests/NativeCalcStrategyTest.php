@@ -45,6 +45,12 @@ class NativeCalcStrategyTest extends TestCase
         }
     }
 
+    public function testCanGetTheFullPrecisionValueToTwoDecimals()
+    {
+        $money = new NativeCalcStrategy('56.14111331312555551');
+        self::assertSame('56.14', $money->getWithFullPrecision());
+    }
+
     public function testCannotComputeTheModulusOfDecimals()
     {
         try {

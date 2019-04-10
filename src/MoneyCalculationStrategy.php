@@ -17,6 +17,7 @@ namespace PHPExperts\MoneyType;
 
 interface MoneyCalculationStrategy
 {
+    public function getWithFullPrecision(): string;
     public function __toString();
     public function add($rightOperand);
     public function subtract($rightOperand);

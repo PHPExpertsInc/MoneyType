@@ -40,6 +40,11 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
         $this->leftOperand = $this->convertToCents($leftOperand);
     }
 
+    public function getWithFullPrecision(): string
+    {
+        return (string)($this->leftOperand / 100);
+    }
+
     /**
      * @return string
      */

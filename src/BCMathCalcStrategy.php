@@ -26,6 +26,11 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
         $this->leftOperand = $leftOperand;
     }
 
+    public function getWithFullPrecision(): string
+    {
+        return $this->leftOperand;
+    }
+
     /**
      * @return string
      */

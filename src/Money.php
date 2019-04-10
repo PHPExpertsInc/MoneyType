@@ -50,6 +50,11 @@ class Money implements MoneyCalculationStrategy
         $this->strategy = $calcStrategy;
     }
 
+    public function getWithFullPrecision(): string
+    {
+        return $this->strategy->getWithFullPrecision();
+    }
+
     /**
      * @return string
      */

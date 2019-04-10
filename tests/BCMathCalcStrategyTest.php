@@ -30,9 +30,16 @@ class BCMathCalcStrategyTest extends TestCase
         $this->calcStrat = new BCMathCalcStrategy('1.12');
     }
 
+    public function testCanGetTheFullPrecisionValueToMoreThanSixteenDecimals()
+    {
+        $money = new BCMathCalcStrategy('56.14111331312555551');
+        self::assertSame('56.14111331312555551', $money->getWithFullPrecision());
+    }
+
     public function testCanAddWithHighPrecision()
     {
-        self::assertSame('56.1411133130', $this->calcStrat->add('55.021113313'));
+        $this->calcStrat->add('55.021113313');
+        self::assertSame('56.1411133131', $this->calcStrat->add('0.0000000001'));
     }
 
     public function testCanSubtractWithHighPrecision()
