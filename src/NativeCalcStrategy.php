@@ -15,6 +15,8 @@
 
 namespace PHPExperts\MoneyType;
 
+use InvalidArgumentException;
+
 final class NativeCalcStrategy implements MoneyCalculationStrategy
 {
     private $leftOperand;
@@ -98,7 +100,31 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function modulus($modulus)
     {
-        return ($this->leftOperand / 100) % $modulus;
+        /**
+         * Determines if a variable appears to be a float or not.
+         *
+         * @param string|int|double $number
+         * @return bool True if it appears to be an integer value. "75.0000" returns false.
+         * @throws InvalidArgumentException if $number is not a valid number.
+         */
+        $isFloatLike = function($number): bool {
+            // Bail if it isn't even a number.
+            if (!is_numeric($number)) {
+                throw new InvalidArgumentException("'$number' is not a valid number.");
+            }
+
+            // Try to convert the variable to a float.
+            $floatVal = floatval($number);
+
+            // If the parsing succeeded and the value is not equivalent to an int, it's probably a float.
+            return ($floatVal && intval($floatVal) != $floatVal);
+        };
+
+        if ($isFloatLike($modulus)) {
+            throw new InvalidArgumentException('Cannot compute non-integer moduli.');
+        }
+
+        return (string) (($this->leftOperand / 100) % $modulus);
     }
 
     /**
