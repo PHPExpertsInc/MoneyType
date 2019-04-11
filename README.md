@@ -1,4 +1,4 @@
-# RESTSpeaker
+# Money Type
 
 [![TravisCI](https://travis-ci.org/phpexpertsinc/MoneyType.svg?branch=master)](https://travis-ci.org/phpexpertsinc/MoneyType)
 [![Maintainability](https://api.codeclimate.com/v1/badges/37f9c3f6a89b5a72256e/maintainability)](https://codeclimate.com/github/phpexpertsinc/MoneyType/maintainability)
