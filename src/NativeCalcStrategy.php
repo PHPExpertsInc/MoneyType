@@ -17,6 +17,7 @@ namespace PHPExperts\MoneyType;
 
 use BadMethodCallException;
 use InvalidArgumentException;
+use PHPExperts\MoneyType\Internal\NumberHelper;
 
 final class NativeCalcStrategy implements MoneyCalculationStrategy
 {
@@ -108,27 +109,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function modulus($modulus, string $iAmStupid = '')
     {
-        /**
-         * Determines if a variable appears to be a float or not.
-         *
-         * @param string|int|double $number
-         * @return bool True if it appears to be an integer value. "75.0000" returns false.
-         * @throws InvalidArgumentException if $number is not a valid number.
-         */
-        $isFloatLike = function($number): bool {
-            // Bail if it isn't even a number.
-            if (!is_numeric($number)) {
-                throw new InvalidArgumentException("'$number' is not a valid number.");
-            }
-
-            // Try to convert the variable to a float.
-            $floatVal = floatval($number);
-
-            // If the parsing succeeded and the value is not equivalent to an int, it's probably a float.
-            return ($floatVal && intval($floatVal) != $floatVal);
-        };
-
-        if ($isFloatLike($modulus)) {
+        if (NumberHelper::isFloatLike($modulus)) {
             throw new InvalidArgumentException('Cannot compute non-integer moduli: Install ext-bcmath.');
         }
 

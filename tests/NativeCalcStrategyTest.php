@@ -41,7 +41,7 @@ class NativeCalcStrategyTest extends TestCase
             $this->fail('It somehow tried to compute a non-number modulus.');
         }
         catch (InvalidArgumentException $e) {
-            $this->assertEquals("'Not A Number' is not a valid number.", $e->getMessage());
+            $this->assertEquals("This is not a valid number.", $e->getMessage());
         }
     }
 
