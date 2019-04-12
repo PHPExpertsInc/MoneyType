@@ -103,6 +103,13 @@ PHPExperts\MoneyType\NativeCalcStrategy
  ✔ Can divide with cent precision  
  ✔ Can compare two numbers with cent precision
 
+PHPExperts\MoneyType\Internal\NumberHelper  
+ ✔ Will return true if given a float  
+ ✔ Will return true if given a float string  
+ ✔ Will return false if given an integer  
+ ✔ Will return false if given an integer string  
+ ✔ Will throw an exception if given anything else
+
 ## Testing
 
 ```bash
