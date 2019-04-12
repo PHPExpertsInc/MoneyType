@@ -17,7 +17,7 @@ namespace PHPExperts\MoneyType;
 
 use ReflectionClass;
 
-class Money implements MoneyCalculationStrategy
+final class Money implements MoneyCalculationStrategy
 {
     protected $strategy;
 

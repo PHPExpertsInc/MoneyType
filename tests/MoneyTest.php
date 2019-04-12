@@ -18,7 +18,7 @@ use PHPExperts\MoneyType\Money;
 use PHPExperts\MoneyType\MoneyCalculationStrategy;
 use PHPUnit\Framework\TestCase;
 
-class MoneyTest extends TestCase
+final class MoneyTest extends TestCase
 {
     private static function assertCalcStrategy(Money $moneyType, string $expected)
     {

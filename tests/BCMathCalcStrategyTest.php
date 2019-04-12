@@ -18,7 +18,7 @@ use PHPExperts\MoneyType\BCMathCalcStrategy;
 use function PHPExperts\MoneyType\bcround;
 use PHPUnit\Framework\TestCase;
 
-class BCMathCalcStrategyTest extends TestCase
+final class BCMathCalcStrategyTest extends TestCase
 {
     use MathCalcStrategyTestBase;
 
