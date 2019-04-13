@@ -1,3 +1,12 @@
+## v2.0.0: 2019-04-13
+
+* **[2019-04-13]** [Major] Implemented strict_types so that precision is guaranteed. (#11)
+* **[2019-04-13]** Added NumberHelper::assertIsNumeric() to enforce number-like values. (#10)
+* **[2019-04-13]** Added arbitrary precision for converting decimals to lossless integers. (#9)
+* **[2019-04-13]** [Major] Internalized the calculation strategy classes. (#7)
+* **[2019-04-13]** [minor] Made pratically every class `final` to protected against bad devs. (#6)
+* **[2019-04-13]** [minor] Upgraded to PHPUnit 8.0. (#8)
+
 ## v1.6.1: 2019-04-12
 
 * **[2019-04-12]** Added a NumberHelper::isFloatLike() check utility. (#4)
