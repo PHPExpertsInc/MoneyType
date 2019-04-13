@@ -18,7 +18,7 @@ use InvalidArgumentException;
 use PHPExperts\MoneyType\NativeCalcStrategy;
 use PHPUnit\Framework\TestCase;
 
-class NativeCalcStrategyTest extends TestCase
+final class NativeCalcStrategyTest extends TestCase
 {
     use MathCalcStrategyTestBase;
 

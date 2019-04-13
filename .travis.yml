@@ -13,7 +13,7 @@ before_script:
 
 script: 
   - mkdir -p build/logs
-  - php vendor/bin/phpstan analyze --level max src
+  - php vendor/bin/phpstan analyze --level max src test
   - vendor/bin/phpunit --coverage-text --coverage-clover build/logs/clover.xml
 
 after_script:
