@@ -23,6 +23,6 @@ interface MoneyCalculationStrategy
     public function subtract($rightOperand);
     public function multiply($rightOperand);
     public function divide($rightOperand);
-    public function modulus($modulus);
+    public function modulus($rightOperand);
     public function compare($rightOperand);
 }

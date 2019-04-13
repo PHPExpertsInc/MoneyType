@@ -14,7 +14,10 @@
 
 namespace PHPExperts\MoneyType\Tests\Internal;
 
-use PHPExperts\MoneyType\Internal\MoneyCalculationStrategy;
+use InvalidArgumentException;
+use PHPExperts\MoneyType\MoneyCalculationStrategy;
+use PHPExperts\MoneyType\Tests\MoneyTest;
+use ReflectionClass;
 
 trait MathCalcStrategyTestBase
 {
@@ -94,5 +97,47 @@ trait MathCalcStrategyTestBase
 
         // Assert is more.
         self::assertSame(1, $this->calcStrat->compare('1.13'));
+    }
+
+    public function testWillNotAcceptANonNumberForAnyOperation()
+    {
+        $calcOps = [
+            'add',
+            'subtract',
+            'multiply',
+            'divide',
+            'modulus',
+            'compare',
+        ];
+
+        $dataTypes = [
+            'Non-normative string' => 'asdf',
+            'Semi-numeric string'  => '1 asdf',
+            'Array'                => [],
+            'Object'               => new \stdClass(),
+            'Boolean'              => true,
+            'Null'                 => null,
+            'Resource'             => fopen('php://memory', 'r'),
+            'Closure / Callable'   => function() {},
+        ];
+
+        $stratName = (new ReflectionClass($this->calcStrat))->getShortName();
+
+        foreach ($calcOps as $op) {
+            foreach ($dataTypes as $dataTypeDesc => $dataValue) {
+                if (in_array('--debug', $_SERVER['argv'], true)) {
+                    echo "Testing {$stratName}::{$op} against {$dataTypeDesc}.";
+                }
+
+                try {
+                    $this->calcStrat->$op($dataValue);
+                    self::fail("Oh crap! {$stratName}::{$op} worked with a {$dataTypeDesc}!");
+                } catch (InvalidArgumentException $e) {
+                    self::assertEquals('This is not a parsable numeric string.', $e->getMessage(), "For {$stratName}::{$op} against {$dataTypeDesc}.");
+                } catch (\TypeError $e) {
+                    self::assertStringContainsString('must be of the type string', $e->getMessage(), "For {$stratName}::{$op} against {$dataTypeDesc}.");
+                }
+            }
+        }
     }
 }

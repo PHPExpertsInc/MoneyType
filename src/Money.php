@@ -116,12 +116,12 @@ final class Money implements MoneyCalculationStrategy
     }
 
     /**
-     * @param string $modulus
+     * @param string $rightOperand
      * @return int
      */
-    public function modulus($modulus)
+    public function modulus($rightOperand)
     {
-        return $this->strategy->modulus($modulus);
+        return $this->strategy->modulus($rightOperand);
     }
 
     /**

@@ -53,6 +53,8 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function add($rightOperand)
     {
+        NumberHelper::assertIsNumeric($rightOperand);
+
         $rightOperand = NumberHelper::convertToCents($rightOperand);
         $this->leftOperand += $rightOperand;
 
@@ -65,6 +67,8 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function subtract($rightOperand)
     {
+        NumberHelper::assertIsNumeric($rightOperand);
+
         $rightOperand = NumberHelper::convertToCents($rightOperand);
         $this->leftOperand -= $rightOperand;
         return (string)round($this->leftOperand / 100, 2);
@@ -76,6 +80,8 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function multiply($rightOperand)
     {
+        NumberHelper::assertIsNumeric($rightOperand);
+
         $rightOperand = NumberHelper::convertToCents($rightOperand);
         $this->leftOperand *= $rightOperand / 100;
 
@@ -88,6 +94,8 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function divide($rightOperand)
     {
+        NumberHelper::assertIsNumeric($rightOperand);
+
         $rightOperand = NumberHelper::convertToCents($rightOperand);
         $this->leftOperand /= $rightOperand / 100;
 
@@ -95,13 +103,15 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
-     * @param string|int|float $modulus It must be a float-like
+     * @param string|int|float $rightOperand It must be a float-like
      * @param string $iAmStupid Do you really want an imprecise modulus with a precision package??
      * @return string
      */
-    public function modulus($modulus, string $iAmStupid = '')
+    public function modulus($rightOperand, string $iAmStupid = '')
     {
-        if (NumberHelper::isFloatLike($modulus)) {
+        NumberHelper::assertIsNumeric($rightOperand);
+
+        if (NumberHelper::isFloatLike($rightOperand)) {
             throw new InvalidArgumentException('Cannot compute non-integer moduli: Install ext-bcmath.');
         }
 
@@ -112,7 +122,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
             );
         }
 
-        return (string) (($this->leftOperand / 100) % $modulus);
+        return (string) (($this->leftOperand / 100) % $rightOperand);
     }
 
     /**
@@ -121,6 +131,8 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function compare($rightOperand)
     {
+        NumberHelper::assertIsNumeric($rightOperand);
+
         $rightOperand = NumberHelper::convertToCents($rightOperand);
 
         return $rightOperand <=> $this->leftOperand;

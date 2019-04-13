@@ -63,7 +63,7 @@ final class MoneyTest extends TestCase
                 return '5';
             }
 
-            public function modulus($modulus)
+            public function modulus($rightOperand)
             {
                 return '6';
             }
