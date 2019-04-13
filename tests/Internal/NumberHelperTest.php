@@ -19,9 +19,7 @@ use PHPExperts\MoneyType\Internal\NumberHelper;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @testdox PHPExperts\MoneyType\Internal\NumberHelper: A collection of functions for number manipulation.
- */
+/** @testdox PHPExperts\MoneyType\Internal\NumberHelper: A collection of functions for number manipulation. */
 final class NumberHelperTest extends TestCase
 {
     public function testWillReturnTrueIfGivenAFloat()
@@ -84,4 +82,17 @@ final class NumberHelperTest extends TestCase
         self::assertNotAValidNumber(function () {});
     }
 
+    public function testCanConvertDollarsToCentsIntegerWithoutPrecisionLoss()
+    {
+        $input    = '122.25';
+        $expected = 12225;
+        self::assertSame($expected, NumberHelper::convertToCents($input));
+    }
+
+    public function testCanConvertBitcoinsToSatoshis()
+    {
+        $input    = '1.25122345';
+        $expected = 125122345;
+        self::assertSame($expected, NumberHelper::convertToCents($input, 8));
+    }
 }

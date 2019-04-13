@@ -56,6 +56,11 @@ $money->compare(321.5492660931000001); // 1 = more
 
 # Get the object.
 print_r($money);
+
+# It is cryptocurrency ready:
+# Converts Bitcoins to Satoshis
+$btc = '1.55527331';
+$satoshis = NumberHelper::convertToCents($btc, 8); // 155527331 (int)
 ```
 
 # Use cases
