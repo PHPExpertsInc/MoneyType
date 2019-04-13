@@ -13,12 +13,15 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\MoneyType;
+namespace PHPExperts\MoneyType\Internal;
 
 use BadMethodCallException;
 use InvalidArgumentException;
-use PHPExperts\MoneyType\Internal\NumberHelper;
+use PHPExperts\MoneyType\MoneyCalculationStrategy;
 
+/**
+ * @internal
+ */
 final class NativeCalcStrategy implements MoneyCalculationStrategy
 {
     public const I_AM_A_DUMMY = 'But I really need this';

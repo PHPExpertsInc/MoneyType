@@ -12,9 +12,9 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\MoneyType\Tests;
+namespace PHPExperts\MoneyType\Tests\Internal;
 
-use PHPExperts\MoneyType\MoneyCalculationStrategy;
+use PHPExperts\MoneyType\Internal\MoneyCalculationStrategy;
 
 trait MathCalcStrategyTestBase
 {

@@ -15,7 +15,10 @@
 
 namespace PHPExperts\MoneyType;
 
+use PHPExperts\MoneyType\Internal\BCMathCalcStrategy;
+use PHPExperts\MoneyType\Internal\NativeCalcStrategy;
 use ReflectionClass;
+use ReflectionException;
 
 final class Money implements MoneyCalculationStrategy
 {
@@ -56,6 +59,8 @@ final class Money implements MoneyCalculationStrategy
     }
 
     /**
+     * Outputs the dollars and cents of the object.
+     *
      * @return string
      */
     public function __toString()
@@ -63,6 +68,12 @@ final class Money implements MoneyCalculationStrategy
         return $this->strategy->__toString();
     }
 
+    /**
+     * Returns the strategy used.
+     *
+     * @return string
+     * @throws ReflectionException
+     */
     public function getStrategy(): string
     {
         return (new ReflectionClass($this->strategy))->getShortName();
