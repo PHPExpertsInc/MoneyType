@@ -19,6 +19,9 @@ use PHPExperts\MoneyType\Internal\NumberHelper;
 use PHPUnit\Framework\AssertionFailedError;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @testdox PHPExperts\MoneyType\Internal\NumberHelper: A collection of functions for number manipulation.
+ */
 final class NumberHelperTest extends TestCase
 {
     public function testWillReturnTrueIfGivenAFloat()
