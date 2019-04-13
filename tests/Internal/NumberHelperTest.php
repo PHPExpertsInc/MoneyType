@@ -22,6 +22,17 @@ use PHPUnit\Framework\TestCase;
 /** @testdox PHPExperts\MoneyType\Internal\NumberHelper: A collection of functions for number manipulation. */
 final class NumberHelperTest extends TestCase
 {
+    public static function assertNotAValidNumber($input)
+    {
+        try {
+            NumberHelper::isFloatLike($input);
+
+            throw new AssertionFailedError('An invalid number was treated like a valid one.');
+        } catch (InvalidArgumentException $e) {
+            self::assertEquals('This is not a parsable numeric string.', $e->getMessage());
+        }
+    }
+
     public function testWillReturnTrueIfGivenAFloat()
     {
         self::assertTrue(NumberHelper::isFloatLike(1.1));
@@ -40,17 +51,6 @@ final class NumberHelperTest extends TestCase
     public function testWillReturnFalseIfGivenAnIntegerString()
     {
         self::assertFalse(NumberHelper::isFloatLike('1'));
-    }
-
-    public static function assertNotAValidNumber($input)
-    {
-        try {
-            NumberHelper::isFloatLike($input);
-
-            throw new AssertionFailedError('An invalid number was treated like a valid one.');
-        } catch (InvalidArgumentException $e) {
-            self::assertEquals('This is not a valid number.', $e->getMessage());
-        }
     }
 
     public function testWillThrowAnExceptionIfGivenAnythingElse()

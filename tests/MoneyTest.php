@@ -63,7 +63,7 @@ final class MoneyTest extends TestCase
                 return '5';
             }
 
-            public function modulus($modulus)
+            public function modulus($rightOperand)
             {
                 return '6';
             }
@@ -138,9 +138,9 @@ final class MoneyTest extends TestCase
         self::assertSame('321.55', $money.'');
         self::assertSame('321.5492660931', $money->getWithFullPrecision());
 
-        self::assertSame(0, $money->compare('321.5492660931'));  //  0 = equal
+        self::assertSame(0,  $money->compare('321.5492660931')); //  0 = equal
         self::assertSame(-1, $money->compare('321.5492660930')); // -1 = less
-        self::assertSame(1, $money->compare('321.5492660932'));  //  1 = more
+        self::assertSame(1,  $money->compare('321.5492660932')); //  1 = more
 
         $btc = '1.55527331';
         $sats = 155527331;

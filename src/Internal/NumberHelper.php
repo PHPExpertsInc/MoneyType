@@ -17,8 +17,24 @@ namespace PHPExperts\MoneyType\Internal;
 
 use InvalidArgumentException;
 
+/**
+ * A collection of static functions for number manipulation.
+ */
 class NumberHelper
 {
+    /**
+     * Asserts if the input is really a numeric string or throws an exception.
+     *
+     * @param  string $number
+     * @throws InvalidArgumentException when the input is not a numeric string.
+     */
+    public static function assertIsNumeric($number): void
+    {
+        if (!is_numeric($number)) {
+            throw new InvalidArgumentException('This is not a parsable numeric string.');
+        }
+    }
+
     /**
      * Determines if a variable appears to be a float or not.
      *
@@ -26,12 +42,10 @@ class NumberHelper
      * @return bool True if it appears to be an integer value. "75.0000" returns false.
      * @throws InvalidArgumentException if $number is not a valid number.
      */
-    public static function isFloatLike ($number): bool
+    public static function isFloatLike($number): bool
     {
         // Bail if it isn't even a number.
-        if (!is_numeric($number)) {
-            throw new InvalidArgumentException('This is not a valid number.');
-        }
+        self::assertIsNumeric($number);
 
         // Try to convert the variable to a float.
         $floatVal = floatval($number);
