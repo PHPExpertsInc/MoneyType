@@ -12,10 +12,10 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\MoneyType\Tests;
+namespace PHPExperts\MoneyType\Tests\Internal;
 
 use InvalidArgumentException;
-use PHPExperts\MoneyType\NativeCalcStrategy;
+use PHPExperts\MoneyType\Internal\NativeCalcStrategy;
 use PHPUnit\Framework\TestCase;
 
 final class NativeCalcStrategyTest extends TestCase

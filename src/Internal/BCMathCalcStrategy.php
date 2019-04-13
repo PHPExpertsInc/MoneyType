@@ -13,8 +13,13 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\MoneyType;
+namespace PHPExperts\MoneyType\Internal;
 
+use PHPExperts\MoneyType\MoneyCalculationStrategy;
+
+/**
+ * @internal
+ */
 final class BCMathCalcStrategy implements MoneyCalculationStrategy
 {
     public const PRECISION = 10;

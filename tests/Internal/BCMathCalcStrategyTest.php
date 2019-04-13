@@ -12,10 +12,10 @@
  * This file is licensed under the MIT License.
  */
 
-namespace PHPExperts\MoneyType\Tests;
+namespace PHPExperts\MoneyType\Tests\Internal;
 
-use PHPExperts\MoneyType\BCMathCalcStrategy;
-use function PHPExperts\MoneyType\bcround;
+use function PHPExperts\MoneyType\Internal\bcround;
+use PHPExperts\MoneyType\Internal\BCMathCalcStrategy;
 use PHPUnit\Framework\TestCase;
 
 final class BCMathCalcStrategyTest extends TestCase
