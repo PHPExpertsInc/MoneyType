@@ -22,7 +22,7 @@ final class BCMathCalcStrategyTest extends TestCase
 {
     use MathCalcStrategyTestBase;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

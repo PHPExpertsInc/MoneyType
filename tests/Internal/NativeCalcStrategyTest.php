@@ -25,7 +25,7 @@ final class NativeCalcStrategyTest extends TestCase
     /** @var NativeCalcStrategy */
     protected $calcStrat;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
