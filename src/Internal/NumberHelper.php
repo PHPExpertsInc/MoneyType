@@ -40,4 +40,15 @@ class NumberHelper
         return ($floatVal && intval($floatVal) != $floatVal);
     }
 
+    /**
+     * Converts a float-like string to an int with no precision loss.
+     *
+     * @param  string $float
+     * @param  int    $precision
+     * @return int
+     */
+    public static function convertToCents(string $float, int $precision = 2): int
+    {
+        return (int) round((float)$float * 10**$precision);
+    }
 }

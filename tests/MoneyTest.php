@@ -14,6 +14,7 @@
 
 namespace PHPExperts\MoneyType\Tests;
 
+use PHPExperts\MoneyType\Internal\NumberHelper;
 use PHPExperts\MoneyType\Money;
 use PHPExperts\MoneyType\MoneyCalculationStrategy;
 use PHPUnit\Framework\TestCase;
@@ -140,6 +141,10 @@ final class MoneyTest extends TestCase
         self::assertSame(0, $money->compare('321.5492660931'));  //  0 = equal
         self::assertSame(-1, $money->compare('321.5492660930')); // -1 = less
         self::assertSame(1, $money->compare('321.5492660932'));  //  1 = more
+
+        $btc = '1.55527331';
+        $sats = 155527331;
+        self::assertSame($sats, NumberHelper::convertToCents($btc, 8));
     }
 }
 
