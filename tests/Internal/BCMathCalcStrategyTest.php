@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
@@ -17,8 +17,9 @@ namespace PHPExperts\MoneyType\Tests\Internal;
 use InvalidArgumentException;
 use function PHPExperts\MoneyType\Internal\bcround;
 use PHPExperts\MoneyType\Internal\BCMathCalcStrategy;
+use PHPExperts\MoneyType\Tests\MoneyTest;
 use PHPUnit\Framework\TestCase;
-use ReflectionClass;
+use TypeError;
 
 /** @testdox PHPExperts\MoneyType\Internal\BCMathCalcStrategy */
 final class BCMathCalcStrategyTest extends TestCase
@@ -29,7 +30,7 @@ final class BCMathCalcStrategyTest extends TestCase
     {
         parent::setUp();
 
-        $this->calcStratName = BCMathCalcStrategy::class;
+        $this->stratName = BCMathCalcStrategy::class;
         $this->calcStrat = new BCMathCalcStrategy('1.12');
     }
 

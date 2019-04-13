@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
@@ -30,7 +30,7 @@ final class NativeCalcStrategyTest extends TestCase
     {
         parent::setUp();
 
-        $this->calcStratName = NativeCalcStrategy::class;
+        $this->stratName = NativeCalcStrategy::class;
         $this->calcStrat = new NativeCalcStrategy('1.12');
     }
 

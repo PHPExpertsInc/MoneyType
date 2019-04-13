@@ -25,7 +25,7 @@ class NumberHelper
     /**
      * Asserts if the input is really a numeric string or throws an exception.
      *
-     * @param  string $number
+     * @param  float|int|string $number The supposedly numeric value.
      * @throws InvalidArgumentException when the input is not a numeric string.
      */
     public static function assertIsNumeric($number): void

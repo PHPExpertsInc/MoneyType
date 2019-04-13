@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
@@ -17,12 +17,13 @@ namespace PHPExperts\MoneyType;
 
 interface MoneyCalculationStrategy
 {
+    public function __construct(string $leftOperand);
+    public function __toString(): string;
     public function getWithFullPrecision(): string;
-    public function __toString();
-    public function add($rightOperand);
-    public function subtract($rightOperand);
-    public function multiply($rightOperand);
-    public function divide($rightOperand);
-    public function modulus($rightOperand);
-    public function compare($rightOperand);
+    public function add(string $rightOperand): string;
+    public function subtract(string $rightOperand): string;
+    public function multiply(string $rightOperand): string;
+    public function divide(string $rightOperand): string;
+    public function modulus(string $rightOperand): string;
+    public function compare(string $rightOperand): int;
 }

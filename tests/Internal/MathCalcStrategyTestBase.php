@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
@@ -18,6 +18,7 @@ use InvalidArgumentException;
 use PHPExperts\MoneyType\MoneyCalculationStrategy;
 use PHPExperts\MoneyType\Tests\MoneyTest;
 use ReflectionClass;
+use TypeError;
 
 trait MathCalcStrategyTestBase
 {
@@ -25,7 +26,7 @@ trait MathCalcStrategyTestBase
     protected $calcStrat;
 
     /** @var string */
-    protected $calcStratName;
+    protected $stratName;
 
     // Inherited from PHPUnit.
     abstract public static function assertInstanceOf(string $expected, $actual, string $message = ''): void;
@@ -33,22 +34,35 @@ trait MathCalcStrategyTestBase
     abstract public static function assertEquals($expected, $actual, string $message = '', float $delta = 0.0, int $maxDepth = 10, bool $canonicalize = false, bool $ignoreCase = false): void;
     abstract public static function assertSame($expected, $actual, string $message = ''): void;
 
-    public function testCanBeInstantiatedWithAnInteger()
+    public function testCanOnlyBeInstantiatedWithANumericString()
     {
-        $bcMathStrat = new $this->calcStratName(1);
-        self::assertInstanceOf($this->calcStratName, $bcMathStrat);
-    }
+        // Numeric String
+        $bcMathStrat = new $this->stratName('1.11');
+        self::assertInstanceOf($this->stratName, $bcMathStrat);
 
-    public function testCanBeInstantiatedWithAFloat()
-    {
-        $bcMathStrat = new $this->calcStratName(1.0);
-        self::assertInstanceOf($this->calcStratName, $bcMathStrat);
-    }
+        $dataTypes = MoneyTest::getNonNumericDataTypes() + [
+                'Integer' => 1,
+                'Float'   => 1.1,
+            ];
 
-    public function testCanBeInstantiatedWithAString()
-    {
-        $bcMathStrat = new $this->calcStratName('1.11');
-        self::assertInstanceOf($this->calcStratName, $bcMathStrat);
+        foreach ($dataTypes as $dataTypeDesc => $dataValue) {
+            try {
+                new $this->stratName($dataValue);
+                self::fail("{$this->stratName} was instantiated with a $dataTypeDesc.");
+            } catch (TypeError $e) {
+                self::assertStringContainsString(
+                    '__construct() must be of the type',
+                    $e->getMessage(),
+                    "Improper instantiation of {$this->stratName} with a {$dataTypeDesc}."
+                );
+            } catch (InvalidArgumentException $e) {
+                self::assertEquals(
+                    'This is not a parsable numeric string.',
+                    $e->getMessage(),
+                    "Improper instantiation of {$this->stratName} with a {$dataTypeDesc}."
+                );
+            }
+        }
     }
 
     public function testAccessTheObjectAsAStringToGetItsValuation()
@@ -110,23 +124,12 @@ trait MathCalcStrategyTestBase
             'compare',
         ];
 
-        $dataTypes = [
-            'Non-normative string' => 'asdf',
-            'Semi-numeric string'  => '1 asdf',
-            'Array'                => [],
-            'Object'               => new \stdClass(),
-            'Boolean'              => true,
-            'Null'                 => null,
-            'Resource'             => fopen('php://memory', 'r'),
-            'Closure / Callable'   => function() {},
-        ];
-
         $stratName = (new ReflectionClass($this->calcStrat))->getShortName();
 
         foreach ($calcOps as $op) {
-            foreach ($dataTypes as $dataTypeDesc => $dataValue) {
+            foreach (MoneyTest::getNonNumericDataTypes() as $dataTypeDesc => $dataValue) {
                 if (in_array('--debug', $_SERVER['argv'], true)) {
-                    echo "Testing {$stratName}::{$op} against {$dataTypeDesc}.";
+                    echo "Testing {$stratName}::{$op} against {$dataTypeDesc}.\n";
                 }
 
                 try {

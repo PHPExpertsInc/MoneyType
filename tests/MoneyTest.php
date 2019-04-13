@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
@@ -29,66 +29,89 @@ final class MoneyTest extends TestCase
         self::assertSame($expected, $actual);
     }
 
+    public static function getNonNumericDataTypes(): array
+    {
+        return [
+            'Non-numerical string' => 'asdf',
+            'Semi-numeric string'  => '1 asdf',
+            'Array'                => [],
+            'Object'               => new \stdClass(),
+            'Boolean'              => true,
+            'Null'                 => null,
+            'Resource'             => fopen('php://memory', 'r'),
+            'Closure / Callable'   => function() {},
+        ];
+    }
+
     public static function buildMockCalcStrategy(): MoneyCalculationStrategy
     {
-        return new class implements MoneyCalculationStrategy
+        return new class('asdf') implements MoneyCalculationStrategy
         {
-            public function getWithFullPrecision(): string
+            public function __toString(): string
             {
                 return '0';
             }
 
-            public function __toString()
+            public function getWithFullPrecision(): string
             {
                 return '1';
             }
 
-            public function add($rightOperand)
+            public function add(string $rightOperand): string
             {
                 return '2';
             }
 
-            public function subtract($rightOperand)
+            public function subtract(string $rightOperand): string
             {
                 return '3';
             }
 
-            public function multiply($rightOperand)
+            public function multiply(string $rightOperand): string
             {
                 return '4';
             }
 
-            public function divide($rightOperand)
+            public function divide(string $rightOperand): string
             {
                 return '5';
             }
 
-            public function modulus($rightOperand)
+            public function modulus(string $rightOperand): string
             {
                 return '6';
             }
 
-            public function compare($rightOperand)
+            public function compare(string $rightOperand): int
             {
-                return '7';
+                return 7;
+            }
+
+            public function __construct(string $leftOperand)
+            {
             }
         };
     }
 
+    public function testCanOnlyBeInstantiatedWithANumericString()
+    {
+        self::assertInstanceOf(Money::class, new Money('5', self::buildMockCalcStrategy()));
+    }
+
     public function testWillReportWhatStrategyIsBeingUsed()
     {
-        $moneyType = new Money(5);
+        $moneyType = new Money('5');
         self::assertCalcStrategy($moneyType, 'BCMathCalcStrategy');
     }
 
     /** @testdox Will use BCMath if it is available */
     public function testWillUseBCMathIfItIsAvailable()
     {
-        $hasBCMath = function() {
+        $hasBCMath = function(): bool {
             return true;
         };
 
-        $moneyType = new Money(5, null, $hasBCMath);
+        $moneyType = new Money('5', null, $hasBCMath);
         self::assertCalcStrategy($moneyType, 'BCMathCalcStrategy');
     }
 
@@ -98,39 +121,42 @@ final class MoneyTest extends TestCase
             return false;
         };
 
-        $moneyType = new Money(5, null, $hasBCMath);
+        $moneyType = new Money('5', null, $hasBCMath);
         self::assertCalcStrategy($moneyType, 'NativeCalcStrategy');
     }
 
     public function testProxiesEverythingToItsCalculationStrategy()
     {
         $mockCalcStrat = self::buildMockCalcStrategy();
-        $moneyType = new Money(5, $mockCalcStrat);
+        $moneyType = new Money('5', $mockCalcStrat);
 
         $calcStratOps = get_class_methods($mockCalcStrat);
+        // Filter out the __construct method.
+        $calcStratOps = array_diff($calcStratOps, ['__construct']);
+
         foreach ($calcStratOps as $index => $op) {
-            self::assertSame((string) $index, $moneyType->$op(0));
+            self::assertEquals($index, $moneyType->$op('0'), $op);
         }
     }
 
     public function testConfirmThatTheReadmeDemoWorks()
     {
-        $money = new Money(5.22);
+        $money = new Money('5.22');
 
-        $money->add(0.55);
+        $money->add('0.55');
         self::assertSame('5.77', $money.'');
 
         # It keeps precision much much better than mere cents.
-        $money->subtract(0.0001);
+        $money->subtract('0.0001');
         self::assertSame('5.77', $money.'');
 
-        $money->subtract(0.004);
+        $money->subtract('0.004');
         self::assertSame('5.77', $money.'');
 
-        $money->subtract(0.001);
+        $money->subtract('0.001');
         self::assertSame('5.76', $money.'');
 
-        $money->multiply(55.777355);
+        $money->multiply('55.777355');
         self::assertSame('321.55', $money.'');
         self::assertSame('321.5508738395', $money->getWithFullPrecision());
 
