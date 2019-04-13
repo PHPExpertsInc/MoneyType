@@ -18,6 +18,7 @@ use PHPExperts\MoneyType\Money;
 use PHPExperts\MoneyType\MoneyCalculationStrategy;
 use PHPUnit\Framework\TestCase;
 
+/** @testdox PHPExperts\MoneyType\Money */
 final class MoneyTest extends TestCase
 {
     private static function assertCalcStrategy(Money $moneyType, string $expected)
@@ -79,6 +80,7 @@ final class MoneyTest extends TestCase
         self::assertCalcStrategy($moneyType, 'BCMathCalcStrategy');
     }
 
+    /** @testdox Will use BCMath if it is available */
     public function testWillUseBCMathIfItIsAvailable()
     {
         $hasBCMath = function() {
@@ -110,7 +112,7 @@ final class MoneyTest extends TestCase
         }
     }
 
-    public function testConfirmThatTheReadMeDemoWorks()
+    public function testConfirmThatTheReadmeDemoWorks()
     {
         $money = new Money(5.22);
 
