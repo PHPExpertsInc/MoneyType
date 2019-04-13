@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.

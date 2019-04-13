@@ -66,13 +66,14 @@ $satoshis = NumberHelper::convertToCents($btc, 8); // 155527331 (int)
 # Use cases
 
 PHPExperts\MoneyType\Money  
+ ✔ Can only be instantiated with a numeric string  
  ✔ Will report what strategy is being used  
- ✔ Will use b c math if it is available  
+ ✔ Will use BCMath if it is available  
  ✔ Will fall back to native php if necessary  
  ✔ Proxies everything to its calculation strategy  
- ✔ Confirm that the read me demo works
+ ✔ Confirm that the readme demo works
 
-PHPExperts\MoneyType\BCMathCalcStrategy  
+PHPExperts\MoneyType\Internal\BCMathCalcStrategy  
  ✔ Can get the full precision value to more than sixteen decimals  
  ✔ Can add with high precision  
  ✔ Can subtract with high precision  
@@ -82,38 +83,38 @@ PHPExperts\MoneyType\BCMathCalcStrategy
  ✔ Can compute high precision modulus  
  ✔ Can compute the modulus of decimals  
  ✔ Can round with high precision  
- ✔ Can be instantiated with an integer  
- ✔ Can be instantiated with a float  
- ✔ Can be instantiated with a string  
+ ✔ Can only be instantiated with a numeric string  
  ✔ Access the object as a string to get its valuation  
  ✔ Can add with cent precision  
  ✔ Can subtract with cent precision  
  ✔ Can multiply with cent precision  
  ✔ Can divide with cent precision  
  ✔ Can compare two numbers with cent precision  
+ ✔ Will not accept a non number for any operation
 
-PHPExperts\MoneyType\NativeCalcStrategy  
+PHPExperts\MoneyType\Internal\NativeCalcStrategy  
  ✔ Wont attempt operations with non numbers  
  ✔ Can get the full precision value to two decimals  
  ✔ Cannot compute the modulus of decimals  
  ✔ Will throw an exception if asked to compute an integer modulus  
  ✔ Can compute the modulus of integers if dev passes i am a dummy parameter  
- ✔ Can be instantiated with an integer  
- ✔ Can be instantiated with a float  
- ✔ Can be instantiated with a string  
+ ✔ Can only be instantiated with a numeric string  
  ✔ Access the object as a string to get its valuation  
  ✔ Can add with cent precision  
  ✔ Can subtract with cent precision  
  ✔ Can multiply with cent precision  
  ✔ Can divide with cent precision  
- ✔ Can compare two numbers with cent precision
+ ✔ Can compare two numbers with cent precision  
+ ✔ Will not accept a non number for any operation
 
-PHPExperts\MoneyType\Internal\NumberHelper  
+PHPExperts\MoneyType\Internal\NumberHelper: A collection of functions for number manipulation.  
  ✔ Will return true if given a float  
  ✔ Will return true if given a float string  
  ✔ Will return false if given an integer  
  ✔ Will return false if given an integer string  
- ✔ Will throw an exception if given anything else
+ ✔ Will throw an exception if given anything else  
+ ✔ Can convert dollars to cents integer without precision loss  
+ ✔ Can convert bitcoins to satoshis
 
 ## Testing
 

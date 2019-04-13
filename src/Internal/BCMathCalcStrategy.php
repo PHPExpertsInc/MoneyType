@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
@@ -26,7 +26,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
 
     private $leftOperand;
 
-    public function __construct($leftOperand)
+    public function __construct(string $leftOperand)
     {
         NumberHelper::assertIsNumeric($leftOperand);
 
@@ -38,19 +38,12 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
         return $this->leftOperand;
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return bcround($this->leftOperand, 2);
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function add($rightOperand)
+    public function add(string $rightOperand): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -59,11 +52,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
         return $this->leftOperand;
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function subtract($rightOperand)
+    public function subtract(string $rightOperand): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -72,11 +61,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
         return $this->leftOperand;
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function multiply($rightOperand)
+    public function multiply(string $rightOperand): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -85,11 +70,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
         return $this->leftOperand;
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function divide($rightOperand)
+    public function divide(string $rightOperand): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -98,11 +79,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
         return $this->leftOperand;
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function modulus($rightOperand)
+    public function modulus(string $rightOperand): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -113,7 +90,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
      * @param string $rightOperand
      * @return int 0 if equal, -1 if $rightOperand is less, 1 if it is greater.
      */
-    public function compare($rightOperand)
+    public function compare(string $rightOperand): int
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -129,7 +106,7 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
  * @param int $precision
  * @return string
  */
-function bcround($number, $precision = BCMathCalcStrategy::PRECISION)
+function bcround(string $number, int $precision = BCMathCalcStrategy::PRECISION): string
 {
     NumberHelper::assertIsNumeric($number);
 

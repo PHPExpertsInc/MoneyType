@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
@@ -24,18 +24,7 @@ final class Money implements MoneyCalculationStrategy
 {
     protected $strategy;
 
-    /**
-     * Money constructor.
-     * @param string $amount
-     * @param MoneyCalculationStrategy|null $calcStrategy
-     */
-    /**
-     * Money constructor.
-     * @param string $amount
-     * @param MoneyCalculationStrategy|null $calcStrategy
-     * @param callable|null $hasBCMath
-     */
-    public function __construct($amount, MoneyCalculationStrategy $calcStrategy = null, callable $hasBCMath = null)
+    public function __construct(string $amount, MoneyCalculationStrategy $calcStrategy = null, callable $hasBCMath = null)
     {
         if (!$hasBCMath) {
             $hasBCMath = function(): bool {
@@ -63,7 +52,7 @@ final class Money implements MoneyCalculationStrategy
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->strategy->__toString();
     }
@@ -79,56 +68,32 @@ final class Money implements MoneyCalculationStrategy
         return (new ReflectionClass($this->strategy))->getShortName();
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function add($rightOperand)
+    public function add($rightOperand): string
     {
         return $this->strategy->add($rightOperand);
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function subtract($rightOperand)
+    public function subtract($rightOperand): string
     {
         return $this->strategy->subtract($rightOperand);
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function multiply($rightOperand)
+    public function multiply($rightOperand): string
     {
         return $this->strategy->multiply($rightOperand);
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function divide($rightOperand)
+    public function divide($rightOperand): string
     {
         return $this->strategy->divide($rightOperand);
     }
 
-    /**
-     * @param string $rightOperand
-     * @return int
-     */
-    public function modulus($rightOperand)
+    public function modulus($rightOperand): string
     {
         return $this->strategy->modulus($rightOperand);
     }
 
-    /**
-     * @param string $rightOperand
-     * @return int
-     */
-    public function compare($rightOperand)
+    public function compare($rightOperand): int
     {
         return $this->strategy->compare($rightOperand);
     }

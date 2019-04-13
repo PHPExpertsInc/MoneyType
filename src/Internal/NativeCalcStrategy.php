@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
@@ -28,8 +28,10 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
 
     private $leftOperand;
 
-    public function __construct($leftOperand)
+    public function __construct(string $leftOperand)
     {
+        NumberHelper::assertIsNumeric($leftOperand);
+
         $this->leftOperand = NumberHelper::convertToCents($leftOperand);
     }
 
@@ -38,20 +40,12 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
         return (string)($this->leftOperand / 100);
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         return (string)round($this->leftOperand / 100, 2);
     }
 
-
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function add($rightOperand)
+    public function add(string $rightOperand): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -61,11 +55,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
         return (string)round($this->leftOperand / 100, 2);
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function subtract($rightOperand)
+    public function subtract(string $rightOperand): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -74,11 +64,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
         return (string)round($this->leftOperand / 100, 2);
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function multiply($rightOperand)
+    public function multiply(string $rightOperand): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -88,11 +74,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
         return (string)round($this->leftOperand / 100, 2);
     }
 
-    /**
-     * @param string $rightOperand
-     * @return string
-     */
-    public function divide($rightOperand)
+    public function divide(string $rightOperand): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -103,11 +85,11 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
     }
 
     /**
-     * @param string|int|float $rightOperand It must be a float-like
+     * @param string $rightOperand It must be a float-like
      * @param string $iAmStupid Do you really want an imprecise modulus with a precision package??
      * @return string
      */
-    public function modulus($rightOperand, string $iAmStupid = '')
+    public function modulus(string $rightOperand, string $iAmStupid = ''): string
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
@@ -129,7 +111,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      * @param string $rightOperand
      * @return int 0 if equal, -1 if $rightOperand is less, 1 if it is greater.
      */
-    public function compare($rightOperand)
+    public function compare(string $rightOperand): int
     {
         NumberHelper::assertIsNumeric($rightOperand);
 
