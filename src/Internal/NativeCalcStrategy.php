@@ -28,20 +28,9 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
 
     private $leftOperand;
 
-    /**
-     * Converts a float/double to an int with no precision loss.
-     *
-     * @param string $float
-     * @return int
-     */
-    private function convertToCents($float)
-    {
-        return (int)round((double) $float * 100);
-    }
-
     public function __construct($leftOperand)
     {
-        $this->leftOperand = $this->convertToCents($leftOperand);
+        $this->leftOperand = NumberHelper::convertToCents($leftOperand);
     }
 
     public function getWithFullPrecision(): string
@@ -64,7 +53,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function add($rightOperand)
     {
-        $rightOperand = $this->convertToCents($rightOperand);
+        $rightOperand = NumberHelper::convertToCents($rightOperand);
         $this->leftOperand += $rightOperand;
 
         return (string)round($this->leftOperand / 100, 2);
@@ -76,7 +65,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function subtract($rightOperand)
     {
-        $rightOperand = $this->convertToCents($rightOperand);
+        $rightOperand = NumberHelper::convertToCents($rightOperand);
         $this->leftOperand -= $rightOperand;
         return (string)round($this->leftOperand / 100, 2);
     }
@@ -87,7 +76,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function multiply($rightOperand)
     {
-        $rightOperand = $this->convertToCents($rightOperand);
+        $rightOperand = NumberHelper::convertToCents($rightOperand);
         $this->leftOperand *= $rightOperand / 100;
 
         return (string)round($this->leftOperand / 100, 2);
@@ -99,7 +88,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function divide($rightOperand)
     {
-        $rightOperand = $this->convertToCents($rightOperand);
+        $rightOperand = NumberHelper::convertToCents($rightOperand);
         $this->leftOperand /= $rightOperand / 100;
 
         return (string)round($this->leftOperand / 100, 2);
@@ -132,7 +121,7 @@ final class NativeCalcStrategy implements MoneyCalculationStrategy
      */
     public function compare($rightOperand)
     {
-        $rightOperand = $this->convertToCents($rightOperand);
+        $rightOperand = NumberHelper::convertToCents($rightOperand);
 
         return $rightOperand <=> $this->leftOperand;
     }
