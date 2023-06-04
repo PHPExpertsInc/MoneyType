@@ -15,7 +15,7 @@ happen to your enterprise application.
 Via Composer
 
 ```bash
-composer require phpexperts/money
+composer require phpexpertsinc/money-type
 ```
 
 ## Usage
