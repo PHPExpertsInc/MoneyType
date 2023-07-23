@@ -31,8 +31,20 @@ trait MathCalcStrategyTestBase
     // Inherited from PHPUnit.
     abstract public static function assertInstanceOf(string $expected, $actual, string $message = ''): void;
     abstract public static function assertIsString($actual, string $message = ''): void;
-    abstract public static function assertEquals($expected, $actual, string $message = '', float $delta = 0.0, int $maxDepth = 10, bool $canonicalize = false, bool $ignoreCase = false): void;
+    abstract public static function assertEquals($expected, $actual, string $message = ''): void;
     abstract public static function assertSame($expected, $actual, string $message = ''): void;
+
+    private static function assertInvalidDataType(string $exceptionMessage, string $message = ''): void
+    {
+        $expectedErrorMessage = version_compare(phpversion(), '8.0', '<')
+            ? 'must be of the type string'
+            : 'must be of type string';
+        self::assertStringContainsString(
+            $expectedErrorMessage,
+            $exceptionMessage,
+            $message
+        );
+    }
 
     public function testCanOnlyBeInstantiatedWithANumericString()
     {
@@ -44,17 +56,12 @@ trait MathCalcStrategyTestBase
                 'Integer' => 1,
                 'Float'   => 1.1,
             ];
-
         foreach ($dataTypes as $dataTypeDesc => $dataValue) {
             try {
                 new $this->stratName($dataValue);
                 self::fail("{$this->stratName} was instantiated with a $dataTypeDesc.");
             } catch (TypeError $e) {
-                self::assertStringContainsString(
-                    '__construct() must be of the type',
-                    $e->getMessage(),
-                    "Improper instantiation of {$this->stratName} with a {$dataTypeDesc}."
-                );
+                self::assertInvalidDataType($e->getMessage(), "Improper instantiation of {$this->stratName} with a {$dataTypeDesc}.");
             } catch (InvalidArgumentException $e) {
                 self::assertEquals(
                     'This is not a parsable numeric string.',
@@ -138,7 +145,7 @@ trait MathCalcStrategyTestBase
                 } catch (InvalidArgumentException $e) {
                     self::assertEquals('This is not a parsable numeric string.', $e->getMessage(), "For {$stratName}::{$op} against {$dataTypeDesc}.");
                 } catch (\TypeError $e) {
-                    self::assertStringContainsString('must be of the type string', $e->getMessage(), "For {$stratName}::{$op} against {$dataTypeDesc}.");
+                    self::assertInvalidDataType($e->getMessage(), "For {$stratName}::{$op} against {$dataTypeDesc}.");
                 }
             }
         }
