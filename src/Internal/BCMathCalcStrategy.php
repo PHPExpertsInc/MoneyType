@@ -3,12 +3,12 @@
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
  *
- * Copyright © 2017-2019 PHP Experts, Inc.
+ * Copyright © 2017-2023 PHP Experts, Inc.
  * Author: Theodore R. Smith <theodore@phpexperts.pro>
  *  GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
  *  @ 2017-05-01 14:38 IST
  *  https://www.phpexperts.pro/
- *  https://github.com/phpexpertsinc/MoneyType
+ *  https://github.com/PHPExpertsInc/MoneyType
  *
  * This file is licensed under the MIT License.
  */
@@ -106,15 +106,20 @@ final class BCMathCalcStrategy implements MoneyCalculationStrategy
  * @param int $precision
  * @return string
  */
-function bcround(string $number, int $precision = BCMathCalcStrategy::PRECISION): string
+function bcround(string $n, $p = BCMathCalcStrategy::PRECISION)
+{
+    $e = bcpow('10', (string) ($p + 1));
+    $result = bcdiv(bcadd(bcmul($n, $e, 0), strpos($n, '-') === 0 ? '-5' : '5'), $e, $p);
+
+    // Pad it out to the desired precision.
+    return bcadd($result, '0', $p);
+}
+
+function bcround_v1(string $number, int $precision = BCMathCalcStrategy::PRECISION): string
 {
     NumberHelper::assertIsNumeric($number);
 
-    if (strpos($number, '.') !== false) {
-        if ($number[0] != '-') return bcadd($number, '0.' . str_repeat('0', $precision) . '5', $precision);
-        return bcsub($number, '0.' . str_repeat('0', $precision) . '5', $precision);
-    }
-
     // Pad it out to the desired precision.
-    return number_format((double) $number, $precision);
+    if ($number[0] != '-') return bcadd($number, '0.' . str_repeat('0', $precision) . '5', $precision);
+    return bcsub($number, '0.' . str_repeat('0', $precision) . '5', $precision);
 }

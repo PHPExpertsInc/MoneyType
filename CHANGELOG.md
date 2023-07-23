@@ -1,3 +1,11 @@
+## v2.1.0: 2023-07-23
+
+* **[2023-07-23 12:11:15 CDT]** Added an even better bcround() for even more assured precision math.
+* **[2023-07-23 12:10:09 CDT]** Upgraded the unit tests to PHP 8.
+* **[2023-07-23 12:08:15 CDT]** [m] Updated the copyright notices.
+* **[2023-07-23 12:05:45 CDT]** Upgraded to PHPUnit v10.
+* **[2023-07-23 07:06:09 CDT]** Migrated to the phpexperts/money package name.
+
 ## v2.0.0: 2019-04-13
 
 * **[2019-04-13]** [Major] Implemented strict_types so that precision is guaranteed. (#11)
@@ -11,7 +19,7 @@
 
 * **[2019-04-12]** Added a NumberHelper::isFloatLike() check utility. (#4)
 
-# v1.6.0: 2019-04-10
+## v1.6.0: 2019-04-10
 
 * [Major] Added ::getWithFullPrecision() for seeing the whole number. 
 

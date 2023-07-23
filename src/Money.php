@@ -3,12 +3,12 @@
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
  *
- * Copyright © 2017-2019 PHP Experts, Inc.
+ * Copyright © 2017-2023 PHP Experts, Inc.
  * Author: Theodore R. Smith <theodore@phpexperts.pro>
  *  GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
  *  @ 2017-05-01 14:17 IST
  *  https://www.phpexperts.pro/
- *  https://github.com/phpexpertsinc/MoneyType
+ *  https://github.com/PHPExpertsInc/MoneyType
  *
  * This file is licensed under the MIT License.
  */

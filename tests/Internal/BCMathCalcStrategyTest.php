@@ -3,23 +3,21 @@
 /**
  * This file is part of MoneyType, a PHP Experts, Inc., Project.
  *
- * Copyright © 2019 PHP Experts, Inc.
+ * Copyright © 2019-2023 PHP Experts, Inc.
  * Author: Theodore R. Smith <theodore@phpexperts.pro>
  *  GPG Fingerprint: 4BF8 2613 1C34 87AC D28F  2AD8 EB24 A91D D612 5690
  *  https://www.phpexperts.pro/
- *  https://github.com/phpexpertsinc/MoneyType
+ *  https://github.com/PHPExpertsInc/MoneyType
  *
  * This file is licensed under the MIT License.
  */
 
 namespace PHPExperts\MoneyType\Tests\Internal;
 
-use InvalidArgumentException;
 use function PHPExperts\MoneyType\Internal\bcround;
 use PHPExperts\MoneyType\Internal\BCMathCalcStrategy;
-use PHPExperts\MoneyType\Tests\MoneyTest;
+use function PHPExperts\MoneyType\Internal\bcround_v1;
 use PHPUnit\Framework\TestCase;
-use TypeError;
 
 /** @testdox PHPExperts\MoneyType\Internal\BCMathCalcStrategy */
 final class BCMathCalcStrategyTest extends TestCase
@@ -94,5 +92,22 @@ final class BCMathCalcStrategyTest extends TestCase
         $expected = '-54.00';
         $actual = bcround('-54', 2);
         self::assertSame($expected, $actual);
+    }
+
+    public function testTheNewRoundingAlgorithmProducesIdenticalResultsToTheOldAlgorithm()
+    {
+        $expected = '-54.030';
+        self::assertEquals($expected, bcround('-54.0300000001', 3));
+        self::assertEquals($expected, bcround_v1('-54.0300000001', 3));
+
+        // With padded zeroes.
+        $expected = '1231.330';
+        self::assertEquals($expected, bcround('1231.33', 3));
+        self::assertEquals($expected, bcround_v1('1231.33', 3));
+
+        $expected = '1234.0000';
+        self::assertEquals($expected, bcround('1234', 4));
+        self::assertEquals($expected, bcround_v1('1234', 4));
+
     }
 }
