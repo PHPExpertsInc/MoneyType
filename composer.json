@@ -1,5 +1,5 @@
 {
-  "name": "phpexpertsinc/money-type",
+  "name": "phpexperts/money",
   "description": "A PHP library for a precise money handling data type. Avoids floating point rounding errors.",
   "license": "MIT",
   "keywords": ["php", "money", "currency", "precise", "precision"],
