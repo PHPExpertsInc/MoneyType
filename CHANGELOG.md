@@ -11,7 +11,7 @@
 
 * **[2019-04-12]** Added a NumberHelper::isFloatLike() check utility. (#4)
 
-# v1.6.0: 2019-04-10
+## v1.6.0: 2019-04-10
 
 * [Major] Added ::getWithFullPrecision() for seeing the whole number. 
 
