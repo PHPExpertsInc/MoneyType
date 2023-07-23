@@ -14,12 +14,10 @@
 
 namespace PHPExperts\MoneyType\Tests\Internal;
 
-use InvalidArgumentException;
 use function PHPExperts\MoneyType\Internal\bcround;
 use PHPExperts\MoneyType\Internal\BCMathCalcStrategy;
-use PHPExperts\MoneyType\Tests\MoneyTest;
+use function PHPExperts\MoneyType\Internal\bcround_v1;
 use PHPUnit\Framework\TestCase;
-use TypeError;
 
 /** @testdox PHPExperts\MoneyType\Internal\BCMathCalcStrategy */
 final class BCMathCalcStrategyTest extends TestCase
@@ -94,5 +92,22 @@ final class BCMathCalcStrategyTest extends TestCase
         $expected = '-54.00';
         $actual = bcround('-54', 2);
         self::assertSame($expected, $actual);
+    }
+
+    public function testTheNewRoundingAlgorithmProducesIdenticalResultsToTheOldAlgorithm()
+    {
+        $expected = '-54.030';
+        self::assertEquals($expected, bcround('-54.0300000001', 3));
+        self::assertEquals($expected, bcround_v1('-54.0300000001', 3));
+
+        // With padded zeroes.
+        $expected = '1231.330';
+        self::assertEquals($expected, bcround('1231.33', 3));
+        self::assertEquals($expected, bcround_v1('1231.33', 3));
+
+        $expected = '1234.0000';
+        self::assertEquals($expected, bcround('1234', 4));
+        self::assertEquals($expected, bcround_v1('1234', 4));
+
     }
 }
